@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# TODO: fix it for Mac
+docker volume ls -qf dangling=true | xargs -r docker volume rm
+docker images -qf dangling=true | xargs -r docker rmi
+
