@@ -4,7 +4,10 @@ useful commands to deal with docker / docker-compose projects
 ## How to install
 
 Make it a git-submodule to your project. 
+
+```
 TODO how?
+```
 
 Add scripts to the PATH variable to call it from any location.
 
