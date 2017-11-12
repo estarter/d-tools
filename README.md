@@ -1,5 +1,6 @@
 # d-tools
-useful commands to deal with docker / docker-compose projects
+The aim of this project is to tackle a problem of "too long commands" in docker.
+It is a set of useful commands to deal with docker / docker-compose projects in a laconic way.
 
 ## How to install
 
