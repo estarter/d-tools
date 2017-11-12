@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# TODO: fix it for Mac
+# TODO: fix it for Mac when no volumes / no images
 docker volume ls -qf dangling=true | xargs -r docker volume rm
 docker images -qf dangling=true | xargs -r docker rmi
 
+# todo: remove stopped containers when special option is passed
+# docker rm $(docker ps -a | grep Exited | awk '{print $1;}')
