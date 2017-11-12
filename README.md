@@ -14,6 +14,14 @@ Add scripts to the PATH variable to call it from any location.
 
 ## How to use
 
+**TODO** add asciicast
+
 ### dcleanup
 
 Use it to remove all dangling images and volumes. It may save a lot of your HD.
+
+## Related resources
+
+1. [docker](https://docs.docker.com/) / [docker-compose](https://docs.docker.com/compose/)
+2. [Docker for Java Developers](https://github.com/docker/labs/tree/master/developer-tools/java/)
+3. 
