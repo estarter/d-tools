@@ -25,3 +25,10 @@ Use it to remove all dangling images and volumes. It may save a lot of your HD.
 1. [docker](https://docs.docker.com/) / [docker-compose](https://docs.docker.com/compose/)
 2. [Docker for Java Developers](https://github.com/docker/labs/tree/master/developer-tools/java/)
 3. [jq](https://stedolan.github.io/jq/) / [jid](https://github.com/simeji/jid)
+
+## TODO
+
+1. port d-scripts
+2. write unit test for them
+3. support global and/or local to project .d-tools.config.json file
+4. add auto-complete
