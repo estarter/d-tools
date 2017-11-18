@@ -43,5 +43,4 @@ Add scripts to the PATH variable to call it from any location.
 
 1. port d-scripts
 2. write unit test for them
-3. support global and/or local to project .d-tools.config.json file
-4. add auto-complete
+3. add auto-complete
