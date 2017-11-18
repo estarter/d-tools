@@ -19,9 +19,9 @@ Screenplay: go to my project, add d-tools as a sub-module, add them to the path,
 Commands (use `-h` option in cli):
 
 * `dset` - specify project name and docker-compose files. `.d-tool.config.json` in local or home dir will be created.
-* `dbuild` - build one, few or all images (wrapper for (docker-compose build)[https://docs.docker.com/compose/reference/build/])
-* `dup` - starts up the system (wrapper for (docker-compose up)[https://docs.docker.com/compose/reference/up/])
-* `ddown` - removes and clean up the system (wrapper for (docker-compose down)[https://docs.docker.com/compose/reference/down/])
+* `dbuild` - build one, few or all images (wrapper for [docker-compose build](https://docs.docker.com/compose/reference/build/))
+* `dup` - starts up the system (wrapper for [docker-compose up](https://docs.docker.com/compose/reference/up/))
+* `ddown` - removes and clean up the system (wrapper for [docker-compose down](https://docs.docker.com/compose/reference/down/))
 * `dcleanup` - remove all dangling images and volumes. It may save a lot of your HD.
 
 ## How to install
