@@ -17,7 +17,8 @@ def call(cmd, pwd=None):
     os.chdir(pwd)
     res = os.system(cmd)
     if res != 0:
-        raise Exception("error calling the script {}".format(res))
+        print("error calling the script {}".format(res))
+        exit(1)
 
 
 def docker_compose_params():
@@ -34,15 +35,24 @@ def docker_compose_params():
 def get_container():
     if len(sys.argv) != 2:
         raise Exception("container parameter is required")
+    # todo: store last used container
     container = sys.argv[1] if len(sys.argv) == 2 else "dlp_c"
     container = container.replace(".Dockerfile", "")
     return container
 
 
+def compose_project():
+    _, project_name = read_config()
+    if project_name is None:
+        raise Exception("default project name is not supported") # todo fix me
+    return project_name
+
+
 def read_config():
     config_file = get_config_file()
     if config_file is None:
-        raise Exception("Can't find config file, use dset command first.")
+        print("Can't find config file, use dset command first.")
+        exit(1)
     try:
         with open(config_file) as configfile:
             content = configfile.readlines()
@@ -66,7 +76,8 @@ def update_config(config_file, docker_compose_files, project_name):
     docker_compose_files = list(set([os.path.abspath(dc_file) for dc_file in docker_compose_files]))
     for dc_file in docker_compose_files:
         if not os.path.exists(dc_file):
-            raise Exception("File not found {}".format(dc_file))
+            print("File not found {}".format(dc_file))
+            exit(1)
     print("write to file {}".format(config_file))
     with open(config_file, 'w') as configfile:
         data = {'docker_compose_files': docker_compose_files}
