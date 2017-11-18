@@ -1,0 +1,26 @@
+#!/usr/bin/python -B
+import argparse
+import imp
+import os
+
+pathname = os.path.dirname(os.path.abspath(__file__))
+DSET = os.path.join(os.path.abspath(pathname), 'dset')
+dset = imp.load_source('dset', DSET) 
+docker_params = dset.docker_compose_params()
+
+parser = argparse.ArgumentParser(description='Build docker images.')
+parser.add_argument("--pull", help="pull the images", dest='pull', action='store_true')
+parser.add_argument("--no-pull", help="don't pull the images", dest='pull', action='store_false')
+parser.set_defaults(pull=True)
+parser.add_argument("--no-cache", help="build without using cache", dest='nocache', action='store_true')
+parser.set_defaults(nocache=False)
+parser.add_argument("image", help="build only this image", nargs='*', default="")
+
+args = parser.parse_args()
+
+# todo introduce unpack functionality
+
+if args.pull:
+    dset.call("docker-compose {} pull".format(docker_params))
+
+dset.call("docker-compose {} build {} {} {}".format(docker_params, "--no-cache" if args.nocache else "", "--pull" if args.pull else "", " ".join(args.image)))

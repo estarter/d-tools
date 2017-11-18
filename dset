@@ -1,0 +1,87 @@
+#!/usr/bin/python -B
+import argparse
+import json
+import os
+import sys
+from os.path import expanduser
+
+pathname = os.path.dirname(os.path.abspath(__file__))
+GLOBAL_CONFIG_FILE = os.path.join(os.path.abspath(expanduser("~")), '.d-tool.config.json')
+LOCAL_CONFIG_FILE = os.path.abspath(os.path.join(pathname, '.d-tool.config.json'))
+
+
+def call(cmd, pwd=None):
+    print cmd
+    if pwd is None:
+        pwd = os.path.abspath(os.path.join(pathname, ".."))
+    os.chdir(pwd)
+    res = os.system(cmd)
+    if res != 0:
+        raise Exception("error calling the script {}".format(res))
+
+
+def docker_compose_params():
+    parts, project_name = read_config()
+    result = ""
+    for c in parts:
+        result += "-f {} ".format(c)
+    # todo save project name?
+    if project_name:
+        result += "-p {} ".format(project_name)
+    return result
+
+
+def get_container():
+    if len(sys.argv) != 2:
+        raise Exception("container parameter is required")
+    container = sys.argv[1] if len(sys.argv) == 2 else "dlp_c"
+    container = container.replace(".Dockerfile", "")
+    return container
+
+
+def read_config():
+    config_file = get_config_file()
+    if config_file is None:
+        raise Exception("Can't find config file, use dset command first.")
+    try:
+        with open(config_file) as configfile:
+            content = configfile.readlines()
+            content = [str for str in content if not str.startswith("//")]
+            data = json.loads("\n".join(content))
+            return data['docker_compose_files'], data['project_name']
+    except IOError:
+        print "Can't open the config file, run ./dset command first"
+        quit(1)
+
+
+def get_config_file():
+    if os.path.isfile(LOCAL_CONFIG_FILE):
+        return LOCAL_CONFIG_FILE
+    if os.path.isfile(GLOBAL_CONFIG_FILE):
+        return GLOBAL_CONFIG_FILE
+    return None
+
+
+def update_config(config_file, docker_compose_files, project_name):
+    docker_compose_files = list(set([os.path.abspath(dc_file) for dc_file in docker_compose_files]))
+    for dc_file in docker_compose_files:
+        if not os.path.exists(dc_file):
+            raise Exception("File not found {}".format(dc_file))
+    print("write to file {}".format(config_file))
+    with open(config_file, 'w') as configfile:
+        data = {'docker_compose_files': docker_compose_files}
+        if project_name:
+            data['project_name'] = project_name
+        configfile.write(json.dumps(data))
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Set docker-compose configuration.')
+    parser.add_argument("docker_compose_files", help="location of docker-compose files", nargs='+')
+    parser.add_argument("-p", "--project_name", help="specify project name for docker-compose")
+    parser.add_argument("-g", "--global", help="use global configuration", dest='is_global', action='store_true')
+    parser.set_defaults(is_global=False)
+    args = parser.parse_args()
+    config_file = GLOBAL_CONFIG_FILE if args.is_global else LOCAL_CONFIG_FILE
+    update_config(config_file, args.docker_compose_files, args.project_name)
+    # todo allow to modify existing config file. how? print out a command that creates current config file

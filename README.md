@@ -2,23 +2,35 @@
 The aim of this project is to tackle a problem of "too long commands" in docker.
 It is a set of useful commands to deal with docker / docker-compose projects in a laconic way.
 
+## How to use
+
+**TODO** add asciicast
+
+## Features
+
+* Control sophisticated docker-compose project in a simple way
+* Call it from any location
+* Memorise your active docker-compose files and docker-compose project name
+* Allows custom scripts before build process (TODO / WHY?)
+
+
+Commands (use `-h` option in cli):
+
+* dset - specify project name and docker-compose files. `.d-tool.config.json` in local or home dir will be created.
+* dbuild - build one, few or all images (wrapper for (docker-compose build)[https://docs.docker.com/compose/reference/build/])
+* dup - starts up the system (wrapper for (docker-compose up)[https://docs.docker.com/compose/reference/up/])
+* ddown - removes and clean up the system (wrapper for (docker-compose down)[https://docs.docker.com/compose/reference/down/])
+* dcleanup - remove all dangling images and volumes. It may save a lot of your HD.
+
 ## How to install
 
-Make it a git-submodule to your project. 
+Make it a git-submodule to your project.
 
 ```
 TODO how?
 ```
 
 Add scripts to the PATH variable to call it from any location.
-
-## How to use
-
-**TODO** add asciicast
-
-### dcleanup
-
-Use it to remove all dangling images and volumes. It may save a lot of your HD.
 
 ## Related resources
 

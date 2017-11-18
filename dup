@@ -1,0 +1,10 @@
+#!/usr/bin/python -B
+import imp
+import os
+
+pathname = os.path.dirname(os.path.abspath(__file__))
+DSET = os.path.join(os.path.abspath(pathname), 'dset')
+dset = imp.load_source('dset', DSET) 
+docker_params = dset.docker_compose_params()
+
+dset.call("docker-compose {} up -d --remove-orphans --no-recreate".format(docker_params))
