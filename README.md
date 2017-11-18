@@ -44,5 +44,6 @@ Add scripts to the PATH variable to call it from any location.
 ## TODO
 
 1. port d-scripts
-2. write unit test for them
-3. add auto-complete
+2. add auto-complete
+3. write unit test for them
+4. automate build + PEP-check code
