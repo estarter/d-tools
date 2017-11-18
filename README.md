@@ -6,6 +6,8 @@ It is a set of useful commands to deal with docker / docker-compose projects in 
 
 **TODO** add asciicast
 
+Screenplay: go to my project, add d-tools as a sub-module, add them to the path, dset, dbuild, dup, down.
+
 ## Features
 
 * Control sophisticated docker-compose project in a simple way
@@ -16,11 +18,11 @@ It is a set of useful commands to deal with docker / docker-compose projects in 
 
 Commands (use `-h` option in cli):
 
-* dset - specify project name and docker-compose files. `.d-tool.config.json` in local or home dir will be created.
-* dbuild - build one, few or all images (wrapper for (docker-compose build)[https://docs.docker.com/compose/reference/build/])
-* dup - starts up the system (wrapper for (docker-compose up)[https://docs.docker.com/compose/reference/up/])
-* ddown - removes and clean up the system (wrapper for (docker-compose down)[https://docs.docker.com/compose/reference/down/])
-* dcleanup - remove all dangling images and volumes. It may save a lot of your HD.
+* `dset` - specify project name and docker-compose files. `.d-tool.config.json` in local or home dir will be created.
+* `dbuild` - build one, few or all images (wrapper for (docker-compose build)[https://docs.docker.com/compose/reference/build/])
+* `dup` - starts up the system (wrapper for (docker-compose up)[https://docs.docker.com/compose/reference/up/])
+* `ddown` - removes and clean up the system (wrapper for (docker-compose down)[https://docs.docker.com/compose/reference/down/])
+* `dcleanup` - remove all dangling images and volumes. It may save a lot of your HD.
 
 ## How to install
 
