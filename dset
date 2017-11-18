@@ -26,7 +26,6 @@ def docker_compose_params():
     result = ""
     for c in parts:
         result += "-f {} ".format(c)
-    # todo save project name?
     if project_name:
         result += "-p {} ".format(project_name)
     return result
