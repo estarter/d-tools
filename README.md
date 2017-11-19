@@ -13,13 +13,13 @@ Check out usage example based on [d-tools-example](https://github.com/estarter/d
 * Control sophisticated docker-compose project in a simple way
 * Call it from any location
 * Memorise your active docker-compose files and docker-compose project name
-* Allows custom scripts before build process (TODO / WHY?)
+* Allows [custom scripts](#prepare-docker-context) execution before docker build process
 
 
 Control commands (use `-h` option in cli):
 
 * `dset` - specify project name and docker-compose files. `.d-tool.config.json` in local or home dir will be created.
-* `dbuild` - build one, few or all images (wrapper for [docker-compose build](https://docs.docker.com/compose/reference/build/))
+* `dbuild` - [prepare docker build context](#prepare-docker-context) and build one, few or all images (wrapper for [docker-compose build](https://docs.docker.com/compose/reference/build/)).
 * `dup` - starts up the system (wrapper for [docker-compose up](https://docs.docker.com/compose/reference/up/))
 * `dps` - shows running containers (wrapper for [docker ps](https://docs.docker.com/engine/reference/commandline/ps/))
 * `ddown` - removes and clean up the system (wrapper for [docker-compose down](https://docs.docker.com/compose/reference/down/))
@@ -36,6 +36,15 @@ technologies and containers, with different path conventions, it's useful to hav
 Note that
 * `dup` command would not recreate your containers on change. Use `docker rm` and `dcleanup` to recreate a container.
 * `dbuild` command by default would pull the image. It's could be annoying, but allows to avoid some silly mistakes.
+
+### Prepare docker context
+
+`dbuild` auto-discovers `prebuild.sh` scripts in any `build/context` folders defined in your docker-compose files
+and execute it before running `docker-compose build` command.
+
+That allows you to execute a custom actions just before docker-compose build command is called.
+It's useful in non-trivial project to prepare docker build context automatically before building the image.
+For example, you can run the build program in `prebuild.sh` (e.g. `maven`).
 
 ## How to install
 

@@ -2,25 +2,68 @@
 import argparse
 import imp
 import os
+import yaml
 
 pathname = os.path.dirname(os.path.abspath(__file__))
 DSET = os.path.join(os.path.abspath(pathname), 'dset')
-dset = imp.load_source('dset', DSET) 
+dset = imp.load_source('dset', DSET)
 docker_params = dset.docker_compose_params()
+
+
+def load_yaml(filename):
+    try:
+        with open(filename, 'r') as fh:
+            return yaml.safe_load(fh)
+    except (IOError, yaml.YAMLError) as e:
+        error_name = getattr(e, '__module__', '') + '.' + e.__class__.__name__
+        raise Exception(u"{}: {}".format(error_name, e))
+
+
+def get_build_context():
+    dc_files, _ = dset.read_config()
+    build_context_set = set()
+    for dc_file in dc_files:
+        config = load_yaml(dc_file)
+        service_list = [service for service in config['services'] if 'services' in config]
+        build_context = [config['services'][service]['build']['context']
+                         for service in service_list
+                         if
+                         'build' in config['services'][service] and 'context' in config['services'][service]['build']]
+        dc_file_dir = os.path.dirname(os.path.realpath(dc_file))
+        for bc in build_context:
+            build_context_set.add(os.path.abspath(os.path.join(dc_file_dir, bc)))
+    return build_context_set
+
+
+def run_prebuild_script(build_context):
+    prebuild_script = os.path.join(build_context, "prebuild.sh")
+    if os.path.exists(prebuild_script):
+        dset.call("sh {}".format(prebuild_script), build_context)
+
 
 parser = argparse.ArgumentParser(description='Build docker images.')
 parser.add_argument("--pull", help="pull the images", dest='pull', action='store_true')
-parser.add_argument("-f", "--no-pull", help="don't pull the images", dest='pull', action='store_false')
+parser.add_argument("--no-pull", help="don't pull the images", dest='pull', action='store_false')
 parser.set_defaults(pull=True)
 parser.add_argument("--no-cache", help="build without using cache", dest='nocache', action='store_true')
 parser.set_defaults(nocache=False)
+parser.add_argument("--skip-prebuild", help="don't run pre-build scrits", dest='skip_prebuild', action='store_true')
+parser.set_defaults(skip_prebuild=False)
+parser.add_argument("-f", help="fast mode, don't pull, don't pre-build", dest='fast', action='store_true')
+parser.set_defaults(fast=False)
 parser.add_argument("image", help="build only this image", nargs='*', default="")
 
 args = parser.parse_args()
+if args.fast:
+    args.pull = False
+    args.skip_prebuild = True
 
-# todo introduce unpack functionality
+if not args.skip_prebuild:
+    for build_context in get_build_context():
+        run_prebuild_script(build_context)
 
 if args.pull:
     dset.call("docker-compose {} pull".format(docker_params))
 
-dset.call("docker-compose {} build {} {} {}".format(docker_params, "--no-cache" if args.nocache else "", "--pull" if args.pull else "", " ".join(args.image)))
+dset.call("docker-compose {} build {} {} {}".format(docker_params, "--no-cache" if args.nocache else "",
+                                                    "--pull" if args.pull else "", " ".join(args.image)))
