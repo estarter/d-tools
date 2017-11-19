@@ -31,6 +31,7 @@ Check out usage example based on [d-tools-example](https://github.com/estarter/d
 * `dlog container` - prints out container's log using custom `/usr/bin/dlog` command. When you have a big zoo of
 technologies and containers, with different path conventions, it's useful to have a same command that shows log files
 ([example](https://github.com/estarter/test-smtp-server/blob/master/Dockerfile#L21)).
+* `dclient container` - run karaf's client command inside karaf container
 
 Skip `container` parameter to use the same container:
 
@@ -82,7 +83,6 @@ Note that PATH variable would only work for one project.
 ## TODO
 
 1. port d-scripts
-   * dclient
    * ddeploy
 2. add auto-complete
 3. write unit test for them

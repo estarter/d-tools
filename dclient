@@ -3,13 +3,13 @@ import argparse
 import imp
 import os
 
-pathname = os.path.dirname(os.path.abspath(__file__))
+pathname = os.path.dirname(os.path.realpath(__file__))
 DSET = os.path.join(os.path.abspath(pathname), 'dset')
 dset = imp.load_source('dset', DSET) 
 
-parser = argparse.ArgumentParser(description='Prints container\'s logs.')
+parser = argparse.ArgumentParser(description='Run karaf client')
 parser.add_argument("container", help="container name", nargs='?')
 args = parser.parse_args()
 
 container = dset.get_container_param(args.container)
-dset.call("docker exec -it {}_{}_1 dlog".format(dset.compose_project(), container))
+dset.call("docker exec -it {}_{}_1 dclient".format(dset.compose_project(), container))

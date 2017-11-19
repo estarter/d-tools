@@ -3,16 +3,16 @@ import argparse
 import imp
 import os
 
+pathname = os.path.dirname(os.path.abspath(__file__))
+DSET = os.path.join(os.path.abspath(pathname), 'dset')
+dset = imp.load_source('dset', DSET)
+
 parser = argparse.ArgumentParser(description='Enter container\'s bash session.')
 parser.add_argument("--root", help="run as root", dest='root', action='store_true')
 parser.set_defaults(root=False)
 parser.add_argument("container", help="container name", nargs='?')
 
 args = parser.parse_args()
-
-pathname = os.path.dirname(os.path.abspath(__file__))
-DSET = os.path.join(os.path.abspath(pathname), 'dset')
-dset = imp.load_source('dset', DSET) 
 
 user = "--user root" if args.root else ""
 container = dset.get_container_param(args.container)
