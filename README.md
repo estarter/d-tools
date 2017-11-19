@@ -4,7 +4,7 @@ It is a set of useful commands to deal with docker / docker-compose projects in 
 
 ## How to use
 
-<a href="https://asciinema.org/a/148184"><img src="https://asciinema.org/a/148184.png" /></a>
+<a href="https://asciinema.org/a/148184?autoplay=1"><img src="https://asciinema.org/a/148184.png" /></a>
 
 ## Features
 
