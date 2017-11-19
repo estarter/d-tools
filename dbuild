@@ -10,7 +10,7 @@ docker_params = dset.docker_compose_params()
 
 parser = argparse.ArgumentParser(description='Build docker images.')
 parser.add_argument("--pull", help="pull the images", dest='pull', action='store_true')
-parser.add_argument("--no-pull", help="don't pull the images", dest='pull', action='store_false')
+parser.add_argument("-f", "--no-pull", help="don't pull the images", dest='pull', action='store_false')
 parser.set_defaults(pull=True)
 parser.add_argument("--no-cache", help="build without using cache", dest='nocache', action='store_true')
 parser.set_defaults(nocache=False)

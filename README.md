@@ -6,7 +6,7 @@ It is a set of useful commands to deal with docker / docker-compose projects in 
 
 **TODO** add asciicast
 
-Screenplay: go to my project, add d-tools as a sub-module, add them to the path, dset, dbuild, dup, dlog, dbash, down.
+Screenplay: go to my project, add d-tools as a sub-module, add them to the path, dset, dbuild, dup, dlog, dbash + dbash --root, down.
 
 ## Features
 
@@ -16,15 +16,26 @@ Screenplay: go to my project, add d-tools as a sub-module, add them to the path,
 * Allows custom scripts before build process (TODO / WHY?)
 
 
-Commands (use `-h` option in cli):
+Control commands (use `-h` option in cli):
 
 * `dset` - specify project name and docker-compose files. `.d-tool.config.json` in local or home dir will be created.
 * `dbuild` - build one, few or all images (wrapper for [docker-compose build](https://docs.docker.com/compose/reference/build/))
 * `dup` - starts up the system (wrapper for [docker-compose up](https://docs.docker.com/compose/reference/up/))
 * `dps` - shows running containers (wrapper for [docker ps](https://docs.docker.com/engine/reference/commandline/ps/))
-* `dbash container` - get a bash session inside the container
 * `ddown` - removes and clean up the system (wrapper for [docker-compose down](https://docs.docker.com/compose/reference/down/))
 * `dcleanup` - remove all dangling images and volumes. It may save a lot of your HD.
+
+Assistant commands:
+
+* `dbash container` - get a bash session inside the container
+* `dlog container` - prints out container's log using custom `/usr/bin/dlog` command. When you have a big zoo of
+technologies and containers, with different path conventions, it's useful to have a same command that shows log files
+([example](https://github.com/estarter/test-smtp-server/blob/master/Dockerfile#L21)).
+
+
+Note that
+* `dup` command would not recreate your containers on change. Use `docker rm` and `dcleanup` to recreate a container.
+* `dbuild` command by default would pull the image. It's could be annoying, but allows to avoid some silly mistakes.
 
 ## How to install
 
