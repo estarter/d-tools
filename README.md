@@ -32,6 +32,17 @@ Check out usage example based on [d-tools-example](https://github.com/estarter/d
 technologies and containers, with different path conventions, it's useful to have a same command that shows log files
 ([example](https://github.com/estarter/test-smtp-server/blob/master/Dockerfile#L21)).
 
+Skip `container` parameter to use the same container:
+
+```bash
+dlog server
+# server logs ...
+dbash
+# connects to server container
+dlog
+# server logs ...
+```
+
 ### Prepare docker context
 
 `dbuild` auto-discovers `prebuild.sh` scripts in any `build/context` folders defined in your docker-compose files

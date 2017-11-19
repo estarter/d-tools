@@ -1,10 +1,16 @@
 #!/usr/bin/python -B
+import argparse
 import imp
 import os
-import sys
 
 pathname = os.path.dirname(os.path.abspath(__file__))
 DSET = os.path.join(os.path.abspath(pathname), 'dset')
 dset = imp.load_source('dset', DSET) 
 
-dset.call("docker exec -it {}_{}_1 dlog".format(dset.compose_project(), dset.get_container()))
+parser = argparse.ArgumentParser(description='Prints container\'s logs.')
+parser.add_argument("container", help="container name", nargs='?')
+
+args = parser.parse_args()
+
+container = dset.get_container_param(args.container)
+dset.call("docker exec -it {}_{}_1 dlog".format(dset.compose_project(), container))
