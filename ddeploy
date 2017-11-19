@@ -1,0 +1,71 @@
+#!/usr/bin/python -B
+import argparse
+import glob
+import imp
+import re
+import os
+
+'''
+Script copies an artifact to /d folder. Container should link /d folder to <server>/deploy.
+Destination file name would not contain the version number of -SNAPSHOT postfix.
+'''
+
+
+def get_deploy_filename(original_file, preserve_version):
+    current_dir = os.getcwd()
+    os.chdir(current_dir)
+    deploy_file = os.path.basename(original_file)
+    version_pattern = re.compile(".*-(\d\.\d).*")
+    if preserve_version:
+        return deploy_file
+    if version_pattern.match(deploy_file):
+        filename, ext = os.path.splitext(deploy_file)
+        filename_parts = filename.split("-")
+        filename_parts = [part for part in filename_parts
+                          if not re.match("^(\d+\.)*\d+$", part)]
+        filename_parts = [part for part in filename_parts
+                          if part.upper() != 'SNAPSHOT']
+        deploy_file = '-'.join(filename_parts) + ext
+    return deploy_file
+
+
+def test_get_deploy_filename():
+    assert get_deploy_filename("test.jar", True) == "test.jar"
+    assert get_deploy_filename("test.jar", False) == "test.jar"
+    assert get_deploy_filename("test-jar-1.0.0-SNAPSHOT.jar", True) == "test-jar-1.0.0-SNAPSHOT.jar"
+    assert get_deploy_filename("test-jar-1.0.0-SNAPSHOT.jar", False) == "test-jar.jar"
+    assert get_deploy_filename("test-jar-1.0.0.jar", True) == "test-jar-1.0.0.jar"
+    assert get_deploy_filename("test-jar-1.0.0.jar", False) == "test-jar.jar"
+    assert get_deploy_filename("test-jar-1.0.jar", False) == "test-jar.jar"
+
+
+if __name__ == '__main__':
+    pathname = os.path.dirname(os.path.abspath(__file__))
+    DSET = os.path.join(os.path.abspath(pathname), 'dset')
+    dset = imp.load_source('dset', DSET)
+
+    parser = argparse.ArgumentParser(description='Deploy file to the container\' server (without version)')
+    parser.add_argument("-c", "--container", help="container name", nargs='?')
+    parser.add_argument("--preserve-version", help="don't remove version from file name", dest='preserve_version',
+                        action='store_true')
+    parser.set_defaults(preserve_version=False)
+    parser.add_argument("files", help="files to deploy", nargs='*')
+    args = parser.parse_args()
+
+    files = args.files
+    if files is None:
+        files = glob.glob('./target/*.jar')
+        if len(files) != 1:
+            print "deploy files are missing"
+            quit(1)
+
+    container = dset.get_container_param(args.container)
+
+    for deploy_file in files:
+        if not os.path.exists(deploy_file):
+            print("missing file: {}".format(deploy_file))
+        else:
+            src_file = os.path.abspath(deploy_file)
+            dest_file = get_deploy_filename(os.path.abspath(deploy_file), args.preserve_version)
+
+            dset.call("docker cp {} {}_{}_1:/d/{}".format(deploy_file, dset.compose_project(), container, dest_file))

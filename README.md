@@ -32,6 +32,7 @@ Check out usage example based on [d-tools-example](https://github.com/estarter/d
 technologies and containers, with different path conventions, it's useful to have a same command that shows log files
 ([example](https://github.com/estarter/test-smtp-server/blob/master/Dockerfile#L21)).
 * `dclient container` - run karaf's client command inside karaf container
+* `ddeploy -c container file.jar` - deploy `file.jar` to `container` server, i.e. copy to the deploy folder `/d` that should be a symlink to actual deploy folder
 
 Skip `container` parameter to use the same container:
 
@@ -82,8 +83,6 @@ Note that PATH variable would only work for one project.
 
 ## TODO
 
-1. port d-scripts
-   * ddeploy
-2. add auto-complete
-3. write unit test for them
-4. automate build + PEP-check code
+1. add auto-complete
+1. write unit test for them; current test solution: `cp ddeploy ddeploy.py && pytest ddeploy.py ; rm ddeploy.py` 
+1. automate build + PEP-check code
