@@ -4,6 +4,8 @@ It is a set of useful commands to deal with docker / docker-compose projects in 
 
 ## How to use
 
+Check out usage example based on [d-tools-example](https://github.com/estarter/d-tools-example) project ([screenplay](https://github.com/estarter/d-tools-example/blob/master/screenplay.txt)).
+
 <a href="https://asciinema.org/a/148184?autoplay=1"><img src="https://asciinema.org/a/148184.png" /></a>
 
 ## Features
