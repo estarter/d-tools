@@ -4,7 +4,7 @@ It is a set of useful commands to deal with docker / docker-compose projects in 
 
 ## How to use
 
-[![asciicast](https://asciinema.org/a/a2ToJI2RZEY8nAGvSI4PdEuUE.png)](https://asciinema.org/a/a2ToJI2RZEY8nAGvSI4PdEuUE)
+[[asciicast](https://asciinema.org/a/148184.png)](https://asciinema.org/a/148184)
 
 ## Features
 
