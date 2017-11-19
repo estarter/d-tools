@@ -4,9 +4,7 @@ It is a set of useful commands to deal with docker / docker-compose projects in 
 
 ## How to use
 
-**TODO** add asciicast
-
-Screenplay: go to my project, add d-tools as a sub-module, add them to the path, dset, dbuild, dup, dlog, dbash + dbash --root, down.
+[![asciicast](https://asciinema.org/a/jbZHNzHkQ2yT8CHSyHckOTgfK.png)](https://asciinema.org/a/jbZHNzHkQ2yT8CHSyHckOTgfK)
 
 ## Features
 
@@ -41,15 +39,13 @@ Note that
 
 Make it a git-submodule to your project.
 
-```
-TODO how?
-```
-
-Add scripts to the PATH variable to call it from any location.
-
 ```bash
-export PATH=$PATH:$(pwd)/d-tools
+git submodule add -b master https://github.com/estarter/d-tools.git
+# add to the PATH variable to call the script from any location
+echo "export PATH=$PATH:$(pwd)/d-tools" >> ~/.bashrc
 ```
+
+Note that PATH variable would only work for one project.
 
 ## Related resources
 
