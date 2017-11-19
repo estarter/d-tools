@@ -32,12 +32,6 @@ Check out usage example based on [d-tools-example](https://github.com/estarter/d
 technologies and containers, with different path conventions, it's useful to have a same command that shows log files
 ([example](https://github.com/estarter/test-smtp-server/blob/master/Dockerfile#L21)).
 
-
-Note that
-* `-h` options in any script shows all available option
-* `dup` command would not recreate your containers on change. Use `docker rm` and `dcleanup` to recreate a container.
-* `dbuild` command by default would pull the image. It's could be annoying, but allows to avoid some silly mistakes.
-
 ### Prepare docker context
 
 `dbuild` auto-discovers `prebuild.sh` scripts in any `build/context` folders defined in your docker-compose files
@@ -48,6 +42,12 @@ It's useful in non-trivial project to prepare docker build context automatically
 For example, you can run the build program in `prebuild.sh` (e.g. `maven`).
 
 Try how it works in [test project](https://github.com/estarter/d-tools-example) (see [prebuild.sh example](https://github.com/estarter/d-tools-example/blob/master/images/client/prebuild.sh))
+
+### Notes
+
+* `-h` options in any script shows all available option
+* `dup` command would not recreate your containers on change. Use `docker rm` and `dcleanup` to recreate a container.
+* `dbuild` command by default would pull the image. It's could be annoying, but allows to avoid some silly mistakes.
 
 ## How to install
 
