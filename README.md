@@ -46,6 +46,8 @@ That allows you to execute a custom actions just before docker-compose build com
 It's useful in non-trivial project to prepare docker build context automatically before building the image.
 For example, you can run the build program in `prebuild.sh` (e.g. `maven`).
 
+Try how it works in [test project](https://github.com/estarter/d-tools-example) (see [prebuild.sh example](https://github.com/estarter/d-tools-example/blob/master/images/client/prebuild.sh))
+
 ## How to install
 
 Make it a git-submodule to your project.
