@@ -61,7 +61,6 @@ Note that PATH variable would only work for one project.
 1. port d-scripts
    * dclient
    * ddeploy
-   * dlog
 2. add auto-complete
 3. write unit test for them
 4. automate build + PEP-check code
