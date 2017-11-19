@@ -1,5 +1,6 @@
-#!/usr/bin/python -B
+#!/usr/bin/env python -B
 import argparse
+import argcomplete
 import imp
 import os
 
@@ -11,7 +12,7 @@ parser = argparse.ArgumentParser(description='Enter container\'s bash session.')
 parser.add_argument("--root", help="run as root", dest='root', action='store_true')
 parser.set_defaults(root=False)
 parser.add_argument("container", help="container name", nargs='?')
-
+argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
 user = "--user root" if args.root else ""

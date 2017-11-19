@@ -1,3 +1,4 @@
+.cache
 *.pyc
 .d-tool.config.json
 .d-tool.last.container.txt

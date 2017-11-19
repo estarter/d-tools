@@ -1,4 +1,5 @@
 #!/usr/bin/python -B
+import argcomplete
 import argparse
 import imp
 import os
@@ -9,6 +10,7 @@ dset = imp.load_source('dset', DSET)
 
 parser = argparse.ArgumentParser(description='Prints container\'s logs.')
 parser.add_argument("container", help="container name", nargs='?')
+argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
 container = dset.get_container_param(args.container)

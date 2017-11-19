@@ -1,4 +1,5 @@
 #!/usr/bin/python -B
+import argcomplete
 import argparse
 import imp
 import os
@@ -52,7 +53,7 @@ parser.set_defaults(skip_prebuild=False)
 parser.add_argument("-f", help="fast mode, don't pull, don't pre-build", dest='fast', action='store_true')
 parser.set_defaults(fast=False)
 parser.add_argument("image", help="build only this image", nargs='*', default="")
-
+argcomplete.autocomplete(parser)
 args = parser.parse_args()
 if args.fast:
     args.pull = False

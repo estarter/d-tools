@@ -1,4 +1,5 @@
 #!/usr/bin/python -B
+import argcomplete
 import argparse
 import glob
 import imp
@@ -50,6 +51,7 @@ if __name__ == '__main__':
                         action='store_true')
     parser.set_defaults(preserve_version=False)
     parser.add_argument("files", help="files to deploy", nargs='*')
+    argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
     files = args.files

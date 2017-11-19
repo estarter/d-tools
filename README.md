@@ -74,6 +74,41 @@ echo "export PATH=$PATH:$(pwd)/d-tools" >> ~/.bashrc
 
 Note that PATH variable would only work for one project.
 
+## Autocomplete
+
+### BASH
+
+```bash
+sudo pip install argcomplete
+activate-global-python-argcomplete
+
+# add functions
+echo 'eval "$(register-python-argcomplete dbash)"' >> ~/.bashrc
+echo 'eval "$(register-python-argcomplete dbuild)"' >> ~/.bashrc
+echo 'eval "$(register-python-argcomplete dclient)"' >> ~/.bashrc
+echo 'eval "$(register-python-argcomplete ddeploy)"' >> ~/.bashrc
+echo 'eval "$(register-python-argcomplete dlog)"' >> ~/.bashrc
+echo 'eval "$(register-python-argcomplete dset)"' >> ~/.bashrc
+```
+
+### ZSH
+
+```bash
+sudo pip install argcomplete
+
+# enable bash autocomplete supprot
+echo 'autoload -Uz compinit bashcompinit' >> ~/.zshrc
+echo 'compinit' >> ~/.zshrc
+echo 'bashcompinit' >> ~/.zshrc
+# add functions
+echo 'eval "$(register-python-argcomplete dbash)"' >> ~/.zshrc
+echo 'eval "$(register-python-argcomplete dbuild)"' >> ~/.zshrc
+echo 'eval "$(register-python-argcomplete dclient)"' >> ~/.zshrc
+echo 'eval "$(register-python-argcomplete ddeploy)"' >> ~/.zshrc
+echo 'eval "$(register-python-argcomplete dlog)"' >> ~/.zshrc
+echo 'eval "$(register-python-argcomplete dset)"' >> ~/.zshrc
+```
+
 ## Related resources
 
 1. [docker](https://docs.docker.com/) / [docker-compose](https://docs.docker.com/compose/)
@@ -83,6 +118,5 @@ Note that PATH variable would only work for one project.
 
 ## TODO
 
-1. add auto-complete
 1. write unit test for them; current test solution: `cp ddeploy ddeploy.py && pytest ddeploy.py ; rm ddeploy.py` 
 1. automate build + PEP-check code

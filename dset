@@ -1,4 +1,5 @@
 #!/usr/bin/python -B
+import argcomplete
 import argparse
 import json
 import os
@@ -110,6 +111,7 @@ if __name__ == '__main__':
     parser.add_argument("-p", "--project_name", help="specify project name for docker-compose")
     parser.add_argument("-g", "--global", help="use global configuration", dest='is_global', action='store_true')
     parser.set_defaults(is_global=False)
+    argcomplete.autocomplete(parser)
     args = parser.parse_args()
     config_file = GLOBAL_CONFIG_FILE if args.is_global else LOCAL_CONFIG_FILE
     update_config(config_file, args.docker_compose_files, args.project_name)
