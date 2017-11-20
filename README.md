@@ -1,3 +1,12 @@
+```bash
+# sync with github
+git remote -v
+git remote add upstream https://github.com/estarter/d-tools.git
+git fetch upstream
+git merge upstream/master
+git remote rm upstream
+```
+
 # d-tools
 The aim of this project is to tackle a problem of "too long commands" in docker.
 It is a set of useful commands to deal with docker / docker-compose projects in a laconic way.
