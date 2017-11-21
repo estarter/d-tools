@@ -89,15 +89,10 @@ Note that PATH variable would only work for one project.
 
 ```bash
 sudo pip install argcomplete
+
 activate-global-python-argcomplete
 
-# add functions
-echo 'eval "$(register-python-argcomplete dbash)"' >> ~/.bashrc
-echo 'eval "$(register-python-argcomplete dbuild)"' >> ~/.bashrc
-echo 'eval "$(register-python-argcomplete dclient)"' >> ~/.bashrc
-echo 'eval "$(register-python-argcomplete ddeploy)"' >> ~/.bashrc
-echo 'eval "$(register-python-argcomplete dlog)"' >> ~/.bashrc
-echo 'eval "$(register-python-argcomplete dset)"' >> ~/.bashrc
+echo ". $(pwd)/autocomplete.sh" >> ~/.bashrc
 ```
 
 ### ZSH
@@ -109,13 +104,8 @@ sudo pip install argcomplete
 echo 'autoload -Uz compinit bashcompinit' >> ~/.zshrc
 echo 'compinit' >> ~/.zshrc
 echo 'bashcompinit' >> ~/.zshrc
-# add functions
-echo 'eval "$(register-python-argcomplete dbash)"' >> ~/.zshrc
-echo 'eval "$(register-python-argcomplete dbuild)"' >> ~/.zshrc
-echo 'eval "$(register-python-argcomplete dclient)"' >> ~/.zshrc
-echo 'eval "$(register-python-argcomplete ddeploy)"' >> ~/.zshrc
-echo 'eval "$(register-python-argcomplete dlog)"' >> ~/.zshrc
-echo 'eval "$(register-python-argcomplete dset)"' >> ~/.zshrc
+
+echo ". $(pwd)/autocomplete.sh" >> ~/.zshrc
 ```
 
 ## Related resources

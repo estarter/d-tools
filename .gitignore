@@ -2,3 +2,15 @@
 *.pyc
 .d-tool.config.json
 .d-tool.last.container.txt
+
+# python compiled files
+dbashc
+dbuildc
+dcleanupc
+dclientc
+ddeployc
+ddownc
+dlogc
+dpsc
+dsetc
+dupc
