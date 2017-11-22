@@ -70,4 +70,4 @@ if __name__ == '__main__':
             src_file = os.path.abspath(deploy_file)
             dest_file = get_deploy_filename(os.path.abspath(deploy_file), args.preserve_version)
 
-            dset.call("docker cp {} {}_{}_1:/d/{}".format(deploy_file, dset.compose_project(), container, dest_file))
+            dset.call("docker cp {} {}_{}_1:/d/{}".format(src_file, dset.compose_project(), container, dest_file))
