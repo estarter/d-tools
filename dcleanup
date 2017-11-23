@@ -1,6 +1,7 @@
 #!/bin/bash
 
 docker system prune -f
+docker volume prune -f
 
 # todo: remove stopped containers when special option is passed
 # docker rm $(docker ps -a | grep Exited | awk '{print $1;}')
