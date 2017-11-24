@@ -1,7 +1,7 @@
 .cache
 *.pyc
-.d-tool.config.json
-.d-tool.last.container.txt
+.d-tool.config.json*
+.d-tool.last.container.txt*
 
 # python compiled files
 dbashc
