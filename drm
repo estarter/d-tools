@@ -8,12 +8,12 @@ pathname = os.path.dirname(os.path.abspath(__file__))
 DSET = os.path.join(os.path.abspath(pathname), 'dset')
 dset = imp.load_source('dset', DSET) 
 
-parser = argparse.ArgumentParser(description='Run karaf client')
+parser = argparse.ArgumentParser(description='Remove docker container')
 parser.add_argument("container", help="container name", nargs='+')
 argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
-for container in args.container
-	dset.call("docker rm -f {}_{}_1 dclient".format(dset.compose_project(), container))
+for container in args.container:
+	dset.call("docker rm -f {}_{}_1".format(dset.compose_project(), container))
 
 dset.call('{}/dcleanup'.format(pathname))
