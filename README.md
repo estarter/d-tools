@@ -73,6 +73,15 @@ Try how it works in [test project](https://github.com/estarter/d-tools-example) 
 
 ## How to install
 
+Update python modules
+
+```bash
+# if PIP is not installed
+sudo apt-get install python-setuptools python-dev build-essential
+sudo easy_install pip
+sudo pip install argcomplete PyYAML
+```
+
 Make it a git-submodule to your project.
 
 ```bash
