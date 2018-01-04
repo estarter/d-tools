@@ -55,11 +55,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     files = args.files
-    if files is None:
-        files = glob.glob('./target/*.jar')
-        if len(files) != 1:
-            print "deploy files are missing"
-            quit(1)
+    if len(files) == 0:
+        current_dir = os.getcwd()
+        files = glob.glob(os.path.join(current_dir, 'target', '*.jar'))
+
+    if len(files) == 0:
+        print "deploy files are missing"
+        quit(1)
 
     container = dset.get_container_param(args.container)
 
