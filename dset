@@ -97,22 +97,32 @@ def update_config(config_file, docker_compose_files, project_name):
         if not os.path.exists(dc_file):
             print("File not found {}".format(dc_file))
             exit(1)
+    data = {'docker_compose_files': docker_compose_files}
+    try:
+        current_compose_files, current_project_name = read_config()
+    except:
+        current_compose_files, current_project_name = [], ""
+    data['project_name'] = project_name if project_name else current_project_name
+    data['docker_compose_files'] = [f for f in data['docker_compose_files'] + current_compose_files if f not in current_compose_files or f not in data['docker_compose_files']]
     print("write to file {}".format(config_file))
     with open(config_file, 'w') as configfile:
-        data = {'docker_compose_files': docker_compose_files}
-        if project_name:
-            data['project_name'] = project_name
         configfile.write(json.dumps(data))
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Set docker-compose configuration.')
-    parser.add_argument("docker_compose_files", help="location of docker-compose files", nargs='+')
+    parser = argparse.ArgumentParser(description='Set docker-compose configuration. Print out current config if no parameters passed.')
+    parser.add_argument("docker_compose_files", help="location of docker-compose files to be _toggled_ in d-tools config file", nargs='*')
     parser.add_argument("-p", "--project_name", help="specify project name for docker-compose")
     parser.add_argument("-g", "--global", help="use global configuration", dest='is_global', action='store_true')
     parser.set_defaults(is_global=False)
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
     config_file = GLOBAL_CONFIG_FILE if args.is_global else LOCAL_CONFIG_FILE
-    update_config(config_file, args.docker_compose_files, args.project_name)
+    if len(args.docker_compose_files) == 0:
+        print "Config file: {}".format(config_file)
+        compose_files, project_name = read_config()
+        print "Project name: {}".format(project_name)
+        print "Compose files:\n{}".format("\n".join("  " + f for f in compose_files))
+    else:
+        update_config(config_file, args.docker_compose_files, args.project_name)
     # todo allow to modify existing config file. how? print out a command that creates current config file
