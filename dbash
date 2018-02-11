@@ -11,10 +11,19 @@ dset = imp.load_source('dset', DSET)
 parser = argparse.ArgumentParser(description='Enter container\'s bash session.')
 parser.add_argument("--root", help="run as root", dest='root', action='store_true')
 parser.set_defaults(root=False)
-parser.add_argument("container", help="container name", nargs='?')
+parser.add_argument("container", help="container name", nargs=1)
 argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
 user = "--user root" if args.root else ""
-container = dset.get_container_param(args.container)
-dset.call("docker exec {} -it {}_{}_1 bash".format(user, dset.compose_project(), container))
+reqiured_container = args.container[0]
+containers = os.popen('docker ps --format="{{.Names}}"').read().split()
+filtered = [c for c in containers if reqiured_container in c]
+if len(filtered) > 1:
+    print "more that 1 running container match: {}".format(filtered)
+    exit(1)
+if len(filtered) == 0:
+    print "no running container match"
+    exit(1)
+
+dset.call("docker exec {} -it {} bash".format(user, filtered[0]))
