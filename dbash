@@ -6,7 +6,9 @@ import os
 
 pathname = os.path.dirname(os.path.abspath(__file__))
 DSET = os.path.join(os.path.abspath(pathname), 'dset')
-dset = imp.load_source('dset', DSET)
+dset = imp.load_source('dset', DSET) 
+DCONTAINER = os.path.join(os.path.abspath(pathname), 'dcontainer')
+dcontainer = imp.load_source('dcontainer', DCONTAINER)
 
 parser = argparse.ArgumentParser(description='Enter container\'s bash session.')
 parser.add_argument("--root", help="run as root", dest='root', action='store_true')
@@ -16,14 +18,5 @@ argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
 user = "--user root" if args.root else ""
-reqiured_container = args.container[0]
-containers = os.popen('docker ps --format="{{.Names}}"').read().split()
-filtered = [c for c in containers if reqiured_container in c]
-if len(filtered) > 1:
-    print "more that 1 running container match: {}".format(filtered)
-    exit(1)
-if len(filtered) == 0:
-    print "no running container match"
-    exit(1)
 
-dset.call("docker exec {} -it {} bash".format(user, filtered[0]))
+dset.call("docker exec {} -it {} bash".format(user, dcontainer.get_container(args.container[0])))

@@ -44,6 +44,8 @@ if __name__ == '__main__':
     pathname = os.path.dirname(os.path.abspath(__file__))
     DSET = os.path.join(os.path.abspath(pathname), 'dset')
     dset = imp.load_source('dset', DSET)
+    DCONTAINER = os.path.join(os.path.abspath(pathname), 'dcontainer')
+    dcontainer = imp.load_source('dcontainer', DCONTAINER)
 
     parser = argparse.ArgumentParser(description='Deploy file to the container\' server (without version)')
     parser.add_argument("-c", "--container", help="container name", nargs='?')
@@ -63,7 +65,7 @@ if __name__ == '__main__':
         print "deploy files are missing"
         quit(1)
 
-    container = dset.get_container_param(args.container)
+    container = dcontainer.get_container(args.container[0])
 
     for deploy_file in files:
         if not os.path.exists(deploy_file):
@@ -72,4 +74,4 @@ if __name__ == '__main__':
             src_file = os.path.abspath(deploy_file)
             dest_file = get_deploy_filename(os.path.abspath(deploy_file), args.preserve_version)
 
-            dset.call("docker cp {} {}_{}_1:/d/{}".format(src_file, dset.compose_project(), container, dest_file))
+            dset.call("docker cp {} {}:/d/{}".format(src_file, container, dest_file))

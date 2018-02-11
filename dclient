@@ -7,11 +7,12 @@ import os
 pathname = os.path.dirname(os.path.abspath(__file__))
 DSET = os.path.join(os.path.abspath(pathname), 'dset')
 dset = imp.load_source('dset', DSET) 
+DCONTAINER = os.path.join(os.path.abspath(pathname), 'dcontainer')
+dcontainer = imp.load_source('dcontainer', DCONTAINER)
 
 parser = argparse.ArgumentParser(description='Run karaf client')
 parser.add_argument("container", help="container name", nargs='?')
 argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
-container = dset.get_container_param(args.container)
-dset.call("docker exec -it {}_{}_1 dclient".format(dset.compose_project(), container))
+dset.call("docker exec -it {} dclient".format(dcontainer.get_container(args.container[0])))
