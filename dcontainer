@@ -5,6 +5,8 @@ def get_container(reqiured_container):
     containers = os.popen('docker ps --format="{{.Names}}"').read().split()
     filtered = [c for c in containers if reqiured_container in c]
     if len(filtered) > 1:
+	    filtered = [c for c in containers if "_"+reqiured_container+"_" in c]
+    if len(filtered) > 1:
         print "more that 1 running container match: {}".format(filtered)
         exit(1)
     if len(filtered) == 0:

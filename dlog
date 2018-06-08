@@ -15,5 +15,4 @@ parser.add_argument("container", help="container name", nargs='?')
 argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
-container = dset.get_container_param(args.container)
-dset.call("docker exec -e COLUMNS=\"`tput cols`\" -e LINES=\"`tput lines`\" -it {} dlog".format(dcontainer.get_container(args.container[0])))
+dset.call("docker exec -e COLUMNS=\"`tput cols`\" -e LINES=\"`tput lines`\" -it {} dlog".format(dcontainer.get_container(args.container)))
