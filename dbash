@@ -19,4 +19,4 @@ args = parser.parse_args()
 
 user = "--user root" if args.root else ""
 
-dset.call("docker exec {} -it {} bash".format(user, dcontainer.get_container(args.container[0])))
+dset.call("docker exec -e COLUMNS=\"`tput cols`\" -e LINES=\"`tput lines`\" {} -it {} bash".format(user, dcontainer.get_container(args.container[0])))
