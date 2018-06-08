@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 import os
 
+pathname = os.path.dirname(os.path.abspath(__file__))
+LAST_CONTAINER_FILE = os.path.abspath(os.path.join(pathname, '.d-tool.last.container.txt'))
+
 def get_container(reqiured_container):
+    if reqiured_container is None:
+      reqiured_container = get_last_container()
     containers = os.popen('docker ps --format="{{.Names}}"').read().split()
     filtered = [c for c in containers if reqiured_container in c]
     if len(filtered) > 1:
-	    filtered = [c for c in containers if "_"+reqiured_container+"_" in c]
+        filtered = [c for c in containers if "_"+reqiured_container+"_" in c]
     if len(filtered) > 1:
         print "more that 1 running container match: {}".format(filtered)
         exit(1)
@@ -13,4 +18,15 @@ def get_container(reqiured_container):
         print "no running container match"
         exit(1)
 
+    set_last_container(filtered[0])
     return filtered[0]
+
+def get_last_container():
+    with open(LAST_CONTAINER_FILE, 'r') as configfile:
+        return configfile.readline()
+
+
+def set_last_container(container):
+    with open(LAST_CONTAINER_FILE, 'w') as configfile:
+        configfile.write(container)
+

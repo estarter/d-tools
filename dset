@@ -9,7 +9,6 @@ from os.path import expanduser
 pathname = os.path.dirname(os.path.abspath(__file__))
 GLOBAL_CONFIG_FILE = os.path.join(os.path.abspath(expanduser("~")), '.d-tool.config.json')
 LOCAL_CONFIG_FILE = os.path.abspath(os.path.join(pathname, '.d-tool.config.json'))
-LAST_CONTAINER_FILE = os.path.abspath(os.path.join(pathname, '.d-tool.last.container.txt'))
 
 
 def call(cmd, pwd=None):
@@ -31,16 +30,6 @@ def docker_compose_params():
     if project_name:
         result += "-p {} ".format(project_name)
     return result
-
-
-def get_last_container():
-    with open(LAST_CONTAINER_FILE, 'r') as configfile:
-        return configfile.readline()
-
-
-def set_last_container(container):
-    with open(LAST_CONTAINER_FILE, 'w') as configfile:
-        configfile.write(container)
 
 
 def get_container_param(container):
