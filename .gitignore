@@ -4,17 +4,4 @@
 .d-tool.last.container.txt*
 
 # python compiled files
-dbashc
-dbuildc
-dcleanupc
-dclientc
-ddeployc
-ddownc
-dlogc
-dpsc
-dsetc
-dupc
-drmc
-dstopc
-dcontainerc
-
+d*c

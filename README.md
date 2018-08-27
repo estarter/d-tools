@@ -32,6 +32,9 @@ Check out usage example based on [d-tools-example](https://github.com/estarter/d
 * `dup` - starts up the system (wrapper for [docker-compose up](https://docs.docker.com/compose/reference/up/))
 * `dps` - shows running containers (wrapper for [docker ps](https://docs.docker.com/engine/reference/commandline/ps/))
 * `ddown` - removes and clean up the system (wrapper for [docker-compose down](https://docs.docker.com/compose/reference/down/))
+* `dstart` - Start a set of docker containers or all containers (wrapper for [docker start]([https://docs.docker.com/engine/reference/commandline/start/) or [docker-compose start](https://docs.docker.com/compose/reference/start/))
+* `drestart` - Restart a set of docker containers or all containers (wrapper for [docker start]([https://docs.docker.com/engine/reference/commandline/restart/) or [docker-compose start](https://docs.docker.com/compose/reference/restart/))
+* `dstop` - Stop a set of docker containers or all running containers (wrapper for [docker stop](https://docs.docker.com/engine/reference/commandline/stop/) or [docker-compose stop](https://docs.docker.com/compose/reference/stop/))
 * `dcleanup` - remove all dangling images and volumes. It may save a lot of your HD.
 
 ### Assistant commands

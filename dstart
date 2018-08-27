@@ -8,14 +8,14 @@ pathname = os.path.dirname(os.path.abspath(__file__))
 DSET = os.path.join(os.path.abspath(pathname), 'dset')
 dset = imp.load_source('dset', DSET)
 
-parser = argparse.ArgumentParser(description='Stop a docker container. Without argument, all containers are stopped.')
+parser = argparse.ArgumentParser(description='Start a docker container. Without argument, all containers are started.')
 parser.add_argument("container", help="container name", nargs='*')
 argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
 if not bool(args.container):
-        print "Stopping all containers..."
-        dset.call("docker-compose {} stop".format(dset.docker_compose_params()))
+        print "Starting all containers..."
+        dset.call("docker-compose {} start".format(dset.docker_compose_params()))
 
 for container in args.container:
-        dset.call("docker stop {}_{}_1".format(dset.compose_project(), container))
+        dset.call("docker start {}_{}_1".format(dset.compose_project(), container))

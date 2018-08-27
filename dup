@@ -7,4 +7,4 @@ DSET = os.path.join(os.path.abspath(pathname), 'dset')
 dset = imp.load_source('dset', DSET) 
 docker_params = dset.docker_compose_params()
 
-dset.call("docker-compose {} up -d --remove-orphans --no-recreate".format(docker_params))
+dset.call("COMPOSE_HTTP_TIMEOUT=300 DOCKER_CLIENT_TIMEOUT=300 docker-compose {} up -d --remove-orphans --no-recreate".format(docker_params))

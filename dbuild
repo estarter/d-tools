@@ -20,13 +20,18 @@ def load_yaml(filename):
         raise Exception(u"{}: {}".format(error_name, e))
 
 
-def get_build_context():
+def get_build_context(services=None):
     dc_files, _ = dset.read_config()
     build_context_set = set()
     for dc_file in dc_files:
         config = load_yaml(dc_file)
+        # get list of values of service nodes under services.  The last if avoids error if no 'services' present
         service_list = [service for service in config['services'] if 'services' in config]
-        build_context = [config['services'][service]['build']['context']
+        # filter service_list for arguments
+        if bool(services):
+        	service_list = [service for service in service_list if service in services]
+
+	build_context = [config['services'][service]['build']['context']
                          for service in service_list
                          if
                          'build' in config['services'][service] and 'context' in config['services'][service]['build']]
@@ -43,14 +48,14 @@ def run_prebuild_script(build_context):
 
 
 parser = argparse.ArgumentParser(description='Build docker images.')
-parser.add_argument("--pull", help="pull the images", dest='pull', action='store_true')
+parser.add_argument("-p", "--pull", help="pull the images", dest='pull', action='store_true')
 parser.add_argument("--no-pull", help="don't pull the images", dest='pull', action='store_false')
 parser.set_defaults(pull=True)
 parser.add_argument("--no-cache", help="build without using cache", dest='nocache', action='store_true')
 parser.set_defaults(nocache=False)
 parser.add_argument("--skip-prebuild", help="don't run pre-build scrits", dest='skip_prebuild', action='store_true')
 parser.set_defaults(skip_prebuild=False)
-parser.add_argument("-f", help="fast mode, don't pull, don't pre-build", dest='fast', action='store_true')
+parser.add_argument("-f", "--fast", help="fast mode, don't pull, don't pre-build", dest='fast', action='store_true')
 parser.set_defaults(fast=False)
 parser.add_argument("image", help="build only this image", nargs='*', default="")
 argcomplete.autocomplete(parser)
@@ -60,7 +65,7 @@ if args.fast:
     args.skip_prebuild = True
 
 if not args.skip_prebuild:
-    for build_context in get_build_context():
+    for build_context in get_build_context(args.image):
         run_prebuild_script(build_context)
 
 if args.pull:
