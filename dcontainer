@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 import os
+import imp
 
 pathname = os.path.dirname(os.path.abspath(__file__))
+DSET = os.path.join(os.path.abspath(pathname), 'dset')
+dset = imp.load_source('dset', DSET) 
 LAST_CONTAINER_FILE = os.path.abspath(os.path.join(pathname, '.d-tool.last.container.txt'))
 
 def get_container(reqiured_container):
@@ -10,7 +13,10 @@ def get_container(reqiured_container):
     containers = os.popen('docker ps --format="{{.Names}}"').read().split()
     filtered = [c for c in containers if reqiured_container in c]
     if len(filtered) > 1:
-        filtered = [c for c in containers if "_"+reqiured_container+"_" in c]
+        full_container_name = "{}_{}_1".format(dset.compose_project(), reqiured_container)
+        exact = [c for c in containers if full_container_name in c]
+        if len(exact) == 1:
+            filtered = exact
     if len(filtered) > 1:
         print "more that 1 running container match: {}".format(filtered)
         exit(1)
